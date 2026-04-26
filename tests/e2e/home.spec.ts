@@ -1,0 +1,38 @@
+/**
+ * E2E-tester med Playwright – BDD-inspirerad.
+ * Scenario: Användaren besöker startsidan och ser butikens budskap.
+ */
+
+import { test, expect } from "@playwright/test";
+
+test.describe("Startsida", () => {
+  test("visar butikens namn och välkomsttext", async ({ page }) => {
+    await page.goto("/");
+
+    await expect(page.getByRole("heading", { name: /östafrikansk butik/i })).toBeVisible();
+    await expect(page.getByText(/dirac · baatis · macwiis/i)).toBeVisible();
+    await expect(page.getByText(/välkommen/i)).toBeVisible();
+    await expect(page.getByText(/kläder och produkter/i)).toBeVisible();
+  });
+
+  test("har länk till steg-för-steg beställning och till alla produkter", async ({ page }) => {
+    await page.goto("/");
+
+    const borjaHär = page.getByRole("link", { name: /börja här|starta beställning/i });
+    await expect(borjaHär.first()).toBeVisible();
+    await expect(borjaHär.first()).toHaveAttribute("href", "/bestall");
+
+    const allaProdukter = page.getByRole("link", { name: /se alla produkter|öppna katalogen/i });
+    await expect(allaProdukter.first()).toBeVisible();
+    await expect(allaProdukter.first()).toHaveAttribute("href", "/produkter");
+  });
+
+  test("API /api/products returnerar JSON med products-array", async ({ request }) => {
+    const res = await request.get("/api/products");
+    expect(res.ok()).toBeTruthy();
+
+    const data = await res.json();
+    expect(data).toHaveProperty("products");
+    expect(Array.isArray(data.products)).toBe(true);
+  });
+});

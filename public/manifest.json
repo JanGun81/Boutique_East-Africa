@@ -1,0 +1,24 @@
+{
+  "name": "Östafrikansk Butik",
+  "short_name": "Östafrikansk",
+  "description": "Kläder och produkter med östafrikanskt tema",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fef9f6",
+  "theme_color": "#b53a2e",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+---
+description: Östafrikansk butik – kodstruktur och arkitektur
+globs: 
+alwaysApply: true
+---
+
+# Östafrikansk Butik – projektregler
+
+- **Språk:** TypeScript överallt. Kommentarer och commit-meddelanden på svenska är ok.
+- **Arkitektur:** Tre lager – DB (Prisma), mellanlager (services + repositories), GUI (Next.js App Router). API-routes anropar endast tjänster; ingen Prisma i routes eller komponenter.
+- **Repository-mönster:** Affärslogik beror på `IProductRepository` (och andra interfaces under `src/lib/core/repositories/`). Prisma används endast i `*\.prisma.repository.ts` och i `src/lib/db.ts`.
+- **API-kontrakt:** Delade typer i `src/lib/api-contract/`. Backend returnerar DTOs; frontend använder samma typer för anrop.
+- **Tester:** E2E med Playwright i `tests/e2e/`, unit/integration med Vitest i `tests/unit/`. BDD-stil i E2E, TDD-vänlig unit.
+- **Mobil:** Mobilförst, responsiv layout. PWA (manifest + next-pwa) för installerbara appar.
