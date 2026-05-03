@@ -11,6 +11,27 @@ Levande backlogg för iterativ utveckling. Uppdateras löpande.
   - `feature/...` för implementation
   - `test/...` för testarbete
 
+## Epics (två spår)
+
+Arbetet delas i **två separata epics**. Kundwebben går först; admin kommer när huvudfunktionaliteten finns på plats. Detaljer under admin-epic **förfines senare**.
+
+### Epic A – Kundwebb (boutique för besökare)
+
+Mål: komplett kundresa i webbappen – produkter, varukorg, beställning, betalning/leverans i den ordning backloggen anger. Alla befintliga tickets `EA-001` och uppåt i tabellerna nedan hör till denna epic så länge inget annat anges.
+
+### Epic B – Admin (administrera webbappen)
+
+Mål: skyddad yta där du kan sköta sortiment och ev. inlägg utan att röra kod. **Startas efter Epic A:s kärna** (orderflöde m.m. enligt din prioritering). Omfattning och uppdelning i mindre stories refinas löpande.
+
+Grovmalad backlogg för Epic B (ersätts eller bryts ned i mindre poster när du tar tag i epicken):
+
+| ID | Prioritet | Typ | Beskrivning | Tester först | Status |
+|----|-----------|-----|-------------|--------------|--------|
+| ADM-001 | P2 | Auth | Inloggning / session för admin-yta (leverantör väljs senare) | Unit + E2E | todo |
+| ADM-002 | P2 | Admin UI | Grundläggande `/admin`-layout och navigation | E2E | todo |
+| ADM-003 | P2 | CRUD | Skapa/redigera/ta bort produkter (och ev. kategorier) via API + formulär | API + Unit + E2E | todo |
+| ADM-004 | P3 | Innehåll | Ev. blogg/inlägg eller sidtexter – scope bestäms senare | TBD | todo |
+
 ## Nuvarande iteration
 
 | ID | Prioritet | Typ | Beskrivning | Tester först | Status |

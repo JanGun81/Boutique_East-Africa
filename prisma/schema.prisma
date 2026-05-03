@@ -32,7 +32,44 @@ model Product {
   inStock     Boolean   @default(true)
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+  orderItems  OrderItem[]
 
   @@index([categoryId])
   @@index([slug])
+}
+
+model Order {
+  id             String      @id @default(cuid())
+  customerName   String
+  customerEmail  String
+  customerAddress String
+  customerPhone  String?
+  totalCents     Int
+  status         OrderStatus @default(PENDING)
+  items          OrderItem[]
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+
+  @@index([createdAt])
+  @@index([status])
+}
+
+model OrderItem {
+  id             String   @id @default(cuid())
+  orderId        String
+  productId      String
+  quantity       Int
+  unitPriceCents Int
+  order          Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product        Product  @relation(fields: [productId], references: [id])
+  createdAt      DateTime @default(now())
+
+  @@index([orderId])
+  @@index([productId])
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  CANCELLED
 }

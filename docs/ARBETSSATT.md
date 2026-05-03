@@ -22,6 +22,14 @@ Flöde per uppgift:
 - BDD för E2E: Playwright-scenarier skrivs i användarnära språk.
 - Definition of Done: inga features är klara innan relevanta unit/API/E2E är gröna.
 
+## Samarbetsmodell: du styr, AI exekverar
+
+- Du agerar produktägare/tech lead och beslutar prioritet, scope och godkännande.
+- AI agerar genomförare/parprogrammerare: bryter ner, kodar, testar och dokumenterar.
+- Ingen större implementation startas utan ett tydligt "kör" från dig.
+- Du kan när som helst välja vad som görs manuellt (commit/push/merge, UI-beslut, kravprioritering).
+- AI levererar "out-of-the-box": testförslag först, implementation i rätt lager, verifiering och uppdaterad dokumentation.
+
 ## Branchstrategi
 
 | Grenmönster | Syfte |
