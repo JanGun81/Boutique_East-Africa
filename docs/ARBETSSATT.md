@@ -84,6 +84,8 @@ npm run test:e2e
 npm run test:e2e:ui
 ```
 
+**E2E och port:** Playwright startar `npm run dev` på **port 3030** som standard (`PLAYWRIGHT_DEV_PORT` / `PLAYWRIGHT_BASE_URL` i `playwright.config.ts`) så E2E inte tar port 3000 när du utvecklar manuellt där.
+
 ## Vad som inte ska committas
 
 Se `.gitignore`: `.env`, `node_modules`, `.next`, Playwright-rapporter med mera. Committa aldrig hemligheter (nycklar, lösenord, tokens).

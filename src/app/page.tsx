@@ -1,26 +1,15 @@
-                                                                                                                                                                                                                                                                                                                                                                                        /**
+/**
  * Startsida – mobilförst, varm östafrikansk design.
  * Tydlig header, hero, två vägar: wizard ("Börja här") och "Se alla produkter".
  */
 
 import Link from "next/link";
+import { SiteHeader } from "@/components/SiteHeader";
 
 export default function HomePage() {
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Header */}
-      <header className="bg-accent text-white shadow-soft sticky top-0 z-10">
-        <div className="container mx-auto px-4 py-3 md:py-4">
-          <Link href="/" className="block">
-            <h1 className="text-xl font-bold md:text-2xl tracking-tight">
-              Östafrikansk Butik
-            </h1>
-            <p className="text-sm text-white/90 mt-0.5">
-              Dirac · Baatis · Macwiis · Unsi &amp; mer
-            </p>
-          </Link>
-        </div>
-      </header>
+      <SiteHeader variant="home" />
 
       {/* Hero */}
       <section className="bg-gradient-to-b from-warm-100 to-warm-50 border-b border-warm-200/60">
@@ -92,13 +81,19 @@ export default function HomePage() {
             Populära kategorier
           </h3>
           <div className="flex flex-wrap gap-2">
-            {["Dirac", "Baatis", "Macwiis", "Unsi", "Övrigt"].map((name) => (
-              <span
-                key={name}
-                className="px-4 py-2 rounded-full bg-warm-100 text-gray-700 text-sm font-medium border border-warm-200"
+            {[
+              { name: "Dirac", slug: "dirac" },
+              { name: "Baatis", slug: "baatis" },
+              { name: "Macwiis", slug: "macwiis" },
+              { name: "Unsi", slug: "unsi" },
+            ].map(({ name, slug }) => (
+              <Link
+                key={slug}
+                href={`/produkter?kategori=${slug}`}
+                className="px-4 py-2 rounded-full bg-warm-100 text-gray-700 text-sm font-medium border border-warm-200 hover:border-accent hover:text-accent-dark transition-colors"
               >
                 {name}
-              </span>
+              </Link>
             ))}
           </div>
         </section>

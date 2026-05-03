@@ -36,19 +36,33 @@ Grovmalad backlogg för Epic B (ersätts eller bryts ned i mindre poster när du
 
 | ID | Prioritet | Typ | Beskrivning | Tester först | Status |
 |----|-----------|-----|-------------|--------------|--------|
-| EA-001 | P1 | Backend | Lägg till Prisma-modeller för `Order` och `OrderItem` | Unit + API | todo |
+| EA-001 | P1 | Backend | Lägg till Prisma-modeller för `Order` och `OrderItem` | Unit + API | done |
 | EA-002 | P1 | API | Skapa `POST /api/orders` via service/repository-lager | API + Unit | todo |
 | EA-003 | P1 | Frontend | Koppla `/kassa` till order-API (ersätt demo-submit) | Unit + E2E | todo |
 | EA-004 | P1 | E2E | BDD-scenario: lyckad beställning från varukorg till tacksida | Playwright | todo |
 
 ## Nästa iteration
 
+Fokus efter P1-orderflödet: produktvyer **och** beställningswizarden på `/bestall` (EA-008–EA-015). **EA-016** och **EA-007** (grunden för kategorimeny/filter) är klara – se nedan.
+
+### Wizard `/bestall` – önskat flöde (översikt)
+
+0. **Tomt sortiment (EA-014):** om det **inte finns några produkter alls** (ingen rader i utbudet som wizarden kan bygga på): visa endast meddelandet **"Väntar på fler produkter"** och en **Tillbaka**-knapp som leder till **startsidan** (`/`). Ingen wizard-steglista i det läget.
+1. **Steg 1 (EA-008):** arrangemang (t.ex. Vardag, Festligt, Natt, Bön); valbart endast om utbud finns, annars utgråat + t.ex. "Kommer snart".
+2. **Steg 2 (EA-012):** val som beror på utbud – data hämtas från **`ProductVariant`** (EA-015): i första hand **stil** om det finns i data, annars **färg**; därefter **storlek**; **material** (eller fler dimensioner) kan läggas till senare. Exakt ordning och hoppade steg styrs av tillgängliga värden per produkt/arrangemang.
+3. **Avslut (EA-013):** när sista obligatoriska valet är gjort: **Lägg i varukorg** → wizarden **stängs** / nollställs → användaren tillbaka till **början** (samma ingång som innan wizard, t.ex. tom wizard på `/bestall` eller redirect enligt slutlig UX – förfines).
+
 | ID | Prioritet | Typ | Beskrivning | Tester först | Status |
 |----|-----------|-----|-------------|--------------|--------|
 | EA-005 | P2 | Frontend | Produktdetaljsida `produkter/[slug]` | Unit + E2E | todo |
+| EA-016 | P2 | Frontend | **Kategorimeny / navigation (klar):** `GET /api/categories`, `CategoryService` + repository. **Mindre än lg:** hamburger i `SiteHeader` med kategorilänkar. **lg och uppåt:** höger **sidopanel** (`CategoryNavRail`, varma toner) – `layout.tsx` reserverar `lg:pr-56`. Startsidans "Populära kategorier" länkar till `/produkter?kategori=`. | E2E + Unit | done |
 | EA-006 | P2 | API | `GET /api/products/[slug]` med DTO-kontrakt | API + Unit | todo |
-| EA-007 | P2 | Frontend | Kategorifilter i produktlistan | Unit + E2E | todo |
-| EA-008 | P2 | UX | Bygg första riktiga stegen i `/bestall` wizard | E2E + Unit | todo |
+| EA-007 | P2 | Frontend | **Kategorifilter (klar i grunden):** `ProductGrid` filtrerar på `?kategori=<slug>`; meny driver valet. Ev. komplettering: filterchips/rad på själva produktsidan senare. | E2E + Unit | done |
+| EA-008 | P2 | UX | Wizard **steg 1**: arrangemang (t.ex. Vardag, Festligt, Natt, Bön). Aktiv endast om kopplat utbud finns; annars utgråat + sekundärtext ("Kommer snart"). Produkt↔arrangemang i datamodell föreslås vid implementation. | E2E + Unit | todo |
+| EA-012 | P2 | UX | Wizard **steg 2**: dynamiska val utifrån **`ProductVariant`** – **stil** om tillgänglig (annars nästa dimension), **färg**, **storlek**, ev. **material**. Endast värden som faktiskt finns i utbud ska vara valbara; övriga utgråade enligt samma princip som steg 1. | E2E + Unit | todo |
+| EA-013 | P2 | UX | Wizard **avslut**: efter sista valet – lägg konfigurerad rad i **varukorg**, stäng/nollställ wizard, användaren till **början** av flödet. | E2E + Unit | todo |
+| EA-014 | P2 | UX | `/bestall` vid **helt tomt produktutbud**: visa **"Väntar på fler produkter"** + **Tillbaka** till `/` (startsida). Gäller när API/demo saknar alla produkter. | E2E | todo |
+| EA-015 | P2 | Backend | **`ProductVariant`**: rader per produkt med valfria fält `style`, `color`, `size`, `material` (+ valfri `sku`, eget `priceCents` eller ärvt från `Product`). **`OrderItem.productVariantId`** valfri FK för att låsa köpt variant. Nästa steg: seed, API för unika värden, koppling varukorg/wizard. | Unit + API | todo |
 
 ## Senare
 

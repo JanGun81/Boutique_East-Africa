@@ -10,6 +10,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// Produktkategori (t.ex. Dirac, Baatis, Unsi) – varje produkt tillhör exakt en kategori.
 model Category {
   id          String    @id @default(cuid())
   name        String
@@ -27,15 +28,36 @@ model Product {
   description String?
   priceCents  Int       // Pris i öre för att undvika flyttalsfel
   imageUrl    String?
-  categoryId  String
+  categoryId  String // FK till produktkategori (Category).
   category    Category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   inStock     Boolean   @default(true)
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+  variants    ProductVariant[]
   orderItems  OrderItem[]
 
   @@index([categoryId])
   @@index([slug])
+}
+
+// Säljbar variant av en produkt (kläd-dimensioner – inte samma som Category).
+// Exempel: samma dirac i olika färg/storlek/stil. Tomma fält = dimension används inte för raden.
+model ProductVariant {
+  id           String   @id @default(cuid())
+  productId    String
+  product      Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  style        String?
+  color        String?
+  size         String?
+  material     String?
+  sku          String?  @unique
+  priceCents   Int? // öre; null = ärv Product.priceCents
+  inStock      Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  orderItems   OrderItem[]
+
+  @@index([productId])
 }
 
 model Order {
@@ -55,17 +77,20 @@ model Order {
 }
 
 model OrderItem {
-  id             String   @id @default(cuid())
-  orderId        String
-  productId      String
-  quantity       Int
-  unitPriceCents Int
-  order          Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  product        Product  @relation(fields: [productId], references: [id])
-  createdAt      DateTime @default(now())
+  id               String          @id @default(cuid())
+  orderId          String
+  productId        String
+  productVariantId String?
+  quantity         Int
+  unitPriceCents   Int
+  order            Order           @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product          Product         @relation(fields: [productId], references: [id])
+  productVariant   ProductVariant? @relation(fields: [productVariantId], references: [id], onDelete: SetNull)
+  createdAt        DateTime        @default(now())
 
   @@index([orderId])
   @@index([productId])
+  @@index([productVariantId])
 }
 
 enum OrderStatus {

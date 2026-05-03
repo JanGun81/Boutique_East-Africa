@@ -7,6 +7,7 @@
 import { useEffect } from "react";
 import Link from "next/link";
 import { useCart } from "@/lib/cart-context";
+import { SiteHeader } from "@/components/SiteHeader";
 
 function formatPrice(cents: number) {
   return new Intl.NumberFormat("sv-SE", {
@@ -26,11 +27,11 @@ export default function TackPage() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <header className="bg-accent text-white shadow-soft">
-        <div className="container mx-auto px-4 py-3">
-          <h1 className="text-lg font-bold">Tack för din beställning</h1>
-        </div>
-      </header>
+      <SiteHeader
+        variant="page"
+        pageTitle="Tack för din beställning"
+        back={{ href: "/", label: "Tillbaka" }}
+      />
 
       <main className="flex-1 container mx-auto px-4 py-8">
         <div className="max-w-lg mx-auto text-center">

@@ -3,19 +3,16 @@
  * Flöde: välj produkt → storlek → tillbehör → granska → lägg i varukorg.
  */
 
-import Link from "next/link";
+import { SiteHeader } from "@/components/SiteHeader";
 
 export default function BestallPage() {
   return (
     <div className="min-h-screen flex flex-col">
-      <header className="bg-accent text-white shadow-soft sticky top-0 z-10">
-        <div className="container mx-auto px-4 py-3 flex items-center gap-4">
-          <Link href="/" className="text-white/90 hover:text-white text-sm">
-            ← Tillbaka
-          </Link>
-          <h1 className="text-lg font-bold">Steg-för-steg beställning</h1>
-        </div>
-      </header>
+      <SiteHeader
+        variant="page"
+        pageTitle="Steg-för-steg beställning"
+        back={{ href: "/", label: "Tillbaka" }}
+      />
 
       <main className="flex-1 container mx-auto px-4 py-8">
         <div className="max-w-lg mx-auto">

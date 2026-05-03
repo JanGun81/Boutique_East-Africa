@@ -35,4 +35,22 @@ test.describe("Startsida", () => {
     expect(data).toHaveProperty("products");
     expect(Array.isArray(data.products)).toBe(true);
   });
+
+  test("API /api/categories returnerar JSON med categories-array", async ({ request }) => {
+    const res = await request.get("/api/categories");
+    expect(res.ok()).toBeTruthy();
+
+    const data = await res.json();
+    expect(data).toHaveProperty("categories");
+    expect(Array.isArray(data.categories)).toBe(true);
+  });
+
+  test("på stor skärm visas kategorilänkar i höger sidopanel", async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 720 });
+    await page.goto("/");
+
+    const rail = page.getByRole("complementary", { name: /butiksmenyn/i });
+    await expect(rail.getByRole("link", { name: /^dirac$/i })).toBeVisible();
+    await expect(rail.getByRole("link", { name: /alla produkter/i })).toBeVisible();
+  });
 });

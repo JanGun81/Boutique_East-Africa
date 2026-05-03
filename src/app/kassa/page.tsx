@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useCart } from "@/lib/cart-context";
 import { CartSummary } from "@/components/CartSummary";
+import { SiteHeader } from "@/components/SiteHeader";
 import { useState, FormEvent } from "react";
 
 function formatPrice(cents: number) {
@@ -38,14 +39,11 @@ export default function KassaPage() {
   if (itemCount === 0 && items.length === 0) {
     return (
       <div className="min-h-screen flex flex-col">
-        <header className="bg-accent text-white shadow-soft sticky top-0 z-10">
-          <div className="container mx-auto px-4 py-3 flex items-center gap-4">
-            <Link href="/produkter" className="text-white/90 hover:text-white text-sm">
-              ← Tillbaka
-            </Link>
-            <h1 className="text-lg font-bold">Kassa</h1>
-          </div>
-        </header>
+        <SiteHeader
+          variant="page"
+          pageTitle="Kassa"
+          back={{ href: "/produkter", label: "Tillbaka" }}
+        />
         <main className="flex-1 container mx-auto px-4 py-8">
           <p className="text-gray-600 mb-4">Din varukorg är tom.</p>
           <Link
@@ -61,14 +59,11 @@ export default function KassaPage() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <header className="bg-accent text-white shadow-soft sticky top-0 z-10">
-        <div className="container mx-auto px-4 py-3 flex items-center gap-4">
-          <Link href="/produkter" className="text-white/90 hover:text-white text-sm">
-            ← Tillbaka
-          </Link>
-          <h1 className="text-lg font-bold">Kassa</h1>
-        </div>
-      </header>
+      <SiteHeader
+        variant="page"
+        pageTitle="Kassa"
+        back={{ href: "/produkter", label: "Tillbaka" }}
+      />
 
       <main className="flex-1 container mx-auto px-4 py-6 md:py-8">
         <div className="max-w-2xl mx-auto">

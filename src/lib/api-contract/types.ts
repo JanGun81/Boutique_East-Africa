@@ -27,6 +27,11 @@ export interface ProductsResponse {
   products: ProductDto[];
 }
 
+/** GET /api/categories – lista kategorier för meny (samma form som ProductDto.category). */
+export interface CategoriesResponse {
+  categories: ProductCategoryDto[];
+}
+
 export interface ProductResponse {
   product: ProductDto | null;
 }

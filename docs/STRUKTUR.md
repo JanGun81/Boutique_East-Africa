@@ -27,31 +27,33 @@ Denna fil beskriver hur kodbasen är organiserad, vilka lager som gäller och hu
 east-african-shop/
 ├── docs/                    # Denna dokumentation
 ├── prisma/
-│   ├── schema.prisma        # Category, Product (PostgreSQL)
+│   ├── schema.prisma        # Category, Product, ProductVariant, Order, OrderItem (PostgreSQL)
 │   └── seed.js              # Exempelkategorier och 3 produkter
 ├── public/                  # Statiska filer, PWA-output (workbox), manifest.json
 ├── src/
 │   ├── app/                 # App Router: sidor + API
+│   │   ├── api/categories/  # GET /api/categories
 │   │   ├── api/products/    # GET /api/products
 │   │   ├── bestall/         # Wizard (placeholder – ej byggd)
 │   │   ├── kassa/           # Gästkassa + tacksida
 │   │   ├── produkter/       # Produktlista med varukorg
-│   │   ├── layout.tsx       # Root: CartProvider, metadata, viewport
+│   │   ├── layout.tsx       # Root: CartProvider, lg:pr-56, CategoryNavRail (Suspense)
 │   │   ├── page.tsx         # Startsida
 │   │   └── globals.css      # Design tokens / Tailwind
-│   ├── components/          # Återanvändbara UI-delar (ProductCard, ProductGrid, CartSummary)
+│   ├── components/          # ProductCard, ProductGrid, CartSummary, SiteHeader, CategoryNavRail
 │   └── lib/
-│       ├── api-contract/    # DTO-typer delade mellan API och klient
+│       ├── api-contract/    # DTO-typer + validering (t.ex. types.ts, order.ts)
 │       ├── core/
-│       │   ├── repositories/ # IProductRepository + Prisma-implementation
-│       │   ├── services/     # ProductService + factory (index.ts)
+│       │   ├── repositories/ # Product + Category repositories + Prisma-implementationer
+│       │   ├── services/     # ProductService, CategoryService + factory (index.ts)
 │       │   └── types/        # Domänmodell (t.ex. ProductWithCategory)
 │       ├── cart-context.tsx  # Client-side varukorg (React Context)
 │       ├── db.ts             # Prisma singleton
-│       └── demo-products.ts  # Fallback när DB saknas eller är tom
+│       ├── demo-products.ts  # Fallback när DB saknas eller är tom
+│       └── demo-categories.ts # Fallback för kategorimeny om /api/categories saknar DB
 ├── tests/
 │   ├── e2e/                 # Playwright (startsida, länkar, API)
-│   └── unit/                # Vitest (ProductService med mock-repo)
+│   └── unit/                # Vitest (ProductService, OrderService, order-API-validering m.m.)
 ├── next.config.ts           # Bilder (Unsplash), PWA-wrapper
 └── package.json
 ```
@@ -66,11 +68,36 @@ east-african-shop/
 
 Om databasen saknas eller anrop misslyckas returneras tom lista; `ProductGrid` faller då tillbaka på `demo-products.ts`.
 
+## Dataflöde: kategorier (meny)
+
+1. `SiteHeader` (mobil) och `CategoryNavRail` (`lg+`) hämtar `GET /api/categories`.
+2. Routen `src/app/api/categories/route.ts` anropar `categoryService.getAllCategories()`.
+3. `CategoryService` använder `ICategoryRepository` (`PrismaCategoryRepository`).
+4. Vid fel/tom DB används `demo-categories.ts` i API-svaret så menyn alltid har innehåll i utveckling.
+
+## Navigation och layout
+
+- **`SiteHeader`:** gemensamt sidhuvud (accent); **hamburger** under Tailwind-brytpunkt **`lg`** med utfällbar kategorilista.
+- **`CategoryNavRail`:** endast **`lg` och större** – fast **högerpanel** i varma toner (inte samma röda som headern), landmark `aria-label="Butiksmenyn"`.
+- **`layout.tsx`:** `body` har **`lg:pr-56`** så huvudinnehåll inte skymms av panelen. `CategoryNavRail` ligger i **`Suspense`** p.g.a. `useSearchParams` (aktiv länk för `?kategori=`).
+- **`/produkter`:** serverläser `searchParams.kategori` och skickar in i `ProductGrid` för filtrering.
+
+## Datamodell (Prisma – översikt)
+
+| Modell | Syfte |
+|--------|--------|
+| **`Category`** | Produktkategori i butiken (t.ex. Dirac, Baatis). Varje `Product` har exakt en `categoryId`. |
+| **`Product`** | Grundprodukt: namn, slug, pris (öre), kategori, lagerflagga m.m. |
+| **`ProductVariant`** | **Variant** av samma produkt för kläd-dimensioner: valfria fält `style`, `color`, `size`, `material`, valfri `sku`, valfritt eget `priceCents` (annars ärvs pris från `Product` i affärslogik). En produkt kan ha **noll eller många** varianter – wizarden (`/bestall`) ska utgå från unika värden i dessa rader när den byggs ut (se `docs/BACKLOG.md`, EA-015). |
+| **`Order` / `OrderItem`** | Beställning och orderrader. `OrderItem` har alltid `productId`; **`productVariantId` är valfri** så man kan låsa vilken färg/storlek/stil som köptes. |
+
+**Skilj på:** *kategori* (vad för slags vara det är) vs *variant* (hur just den sälbara raden ser ut).
+
 ## Varukorg och beställning (nuläge)
 
-- **Varukorg:** `CartProvider` i `layout.tsx`. Tillstånd endast i minnet (ingen localStorage/DB).
-- **Kassa:** Formulär samlar namn, e-post, adress, telefon – värden skickas **inte** till backend än; `submitOrder()` tömmer bara varukorgen och sparar `lastOrder` för tacksidan.
-- **Databas:** Ingen `Order`-modell i Prisma ännu.
+- **Varukorg:** `CartProvider` i `layout.tsx`. Tillstånd endast i minnet (ingen localStorage/DB). Varukorgsrader använder ännu i huvudsak **`ProductDto`** utan variant-id – koppling till `ProductVariant` kommer med wizard/kassa-arbete.
+- **Kassa:** Formulär samlar kunduppgifter; **persistens av order i DB** sker när `POST /api/orders` och kassan är kopplade (backlogg EA-002–EA-003).
+- **Databas:** `Order`, `OrderItem`, `ProductVariant` finns i schemat; kör `npm run db:push` när PostgreSQL är igång så tabellerna skapas.
 
 ## API-kontrakt
 
@@ -81,9 +108,11 @@ Delade typer ligger i `src/lib/api-contract/`. När nya endpoints läggs till: d
 | Plats | Syfte |
 |-------|--------|
 | `tests/unit/product.service.test.ts` | ProductService mot mockat repository |
-| `tests/e2e/home.spec.ts` | Startsida, navigation, `/api/products`-JSON |
+| `tests/unit/order.service.test.ts`, `tests/unit/order.api.test.ts` | Orderberäkning och validering av order-payload |
+| `tests/unit/category.service.test.ts` | CategoryService mot mockat repository |
+| `tests/e2e/home.spec.ts` | Startsida, API products/categories, höger sidopanel på stor skärm |
 
-Kör: `npm run test` respektive `npm run test:e2e` (kräver `npx playwright install` första gången).
+Kör: `npm run test` respektive `npm run test:e2e` (kräver `npx playwright install` första gången). Playwright startar dev-server på **port 3030** som standard (se `playwright.config.ts`) så den inte krockar med manuell `npm run dev` på 3000.
 
 ## Miljövariabler
 
@@ -93,16 +122,15 @@ Kör: `npm run test` respektive `npm run test:e2e` (kräver `npx playwright inst
 
 ## Var du står och väg framåt (checklista)
 
-**Redan på plats:** startsida, produktlista med demo/DB-data, varukorg, gästkassa med tacksida, repository-mönster för produkter, GET-produkter-API, PWA-konfiguration, grundläggande tester.
+**Redan på plats:** startsida, produktlista med demo/DB-data och **filter via `?kategori=`**, **kategorimeny** (API + hamburger + höger sidopanel på stor skärm), varukorg, gästkassa med tacksida, repository-mönster för produkter och kategorier, GET `/api/products` och GET `/api/categories`, Prisma-modeller för order + produktvarianter (kör `db:push` mot Postgres), order- och kategori-tester, PWA-konfiguration, grundläggande E2E.
 
 **Naturliga nästa steg (prioritera efter behov):**
 
-1. **Order i databasen** – Prisma-modell för beställning/rader; `OrderService`; `POST /api/orders`; koppla kassan till API:t.
+1. **Order i drift** – `POST /api/orders`, repository som skriver `Order`/`OrderItem`; koppla kassan till API:t (backlogg EA-002–EA-003).
 2. **Betalning & leverans** – t.ex. Stripe/Klarna, fraktval (kan vara senare fas).
 3. **Produktdetaljsida** – route `app/produkter/[slug]/page.tsx` + `GET /api/products/[slug]` (tjänsten har redan `getProductBySlug`).
-4. **Wizard på `/bestall`** – steg-för-steg enligt copy på startsidan (produkt → storlek → tillbehör → granska → varukorg).
-5. **Kategorier** – API/filtrering; koppla "Populära kategorier" till riktiga slug-länkar.
-6. **PWA-ikoner** – `public/icon-192.png` och `public/icon-512.png` (se rot-README).
-7. **Auth (valfritt)** – NextAuth/Clerk när orderhistorik krävs.
+4. **Wizard på `/bestall`** – steg-för-steg enligt backlogg EA-008–EA-014.
+5. **PWA-ikoner** – `public/icon-192.png` och `public/icon-512.png` (se rot-README).
+6. **Auth (valfritt)** – NextAuth/Clerk när orderhistorik krävs.
 
 Uppdatera denna fil när nya mappar eller lager tillkommer.

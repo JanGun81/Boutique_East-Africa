@@ -1,13 +1,25 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { ProductDto, ProductsResponse } from "@/lib/api-contract/types";
 import { DEMO_PRODUCTS } from "@/lib/demo-products";
 import { ProductCard } from "./ProductCard";
+import Link from "next/link";
 
-export function ProductGrid() {
+export interface ProductGridProps {
+  /** Filtrerar på `product.category.slug` (t.ex. från `?kategori=dirac`). */
+  categorySlug?: string | null;
+}
+
+export function ProductGrid({ categorySlug }: ProductGridProps) {
   const [products, setProducts] = useState<ProductDto[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const filtered = useMemo(() => {
+    const slug = categorySlug?.trim().toLowerCase();
+    if (!slug) return products;
+    return products.filter((p) => p.category.slug.toLowerCase() === slug);
+  }, [products, categorySlug]);
 
   useEffect(() => {
     fetch("/api/products")
@@ -44,9 +56,23 @@ export function ProductGrid() {
     );
   }
 
+  if (filtered.length === 0 && categorySlug?.trim()) {
+    return (
+      <div className="rounded-xl border border-warm-200 bg-warm-50 p-6 text-gray-700">
+        <p className="mb-4">Inga produkter i den här kategorin just nu.</p>
+        <Link
+          href="/produkter"
+          className="inline-flex rounded-lg bg-accent px-4 py-2 text-white text-sm font-medium hover:bg-accent-dark"
+        >
+          Visa alla produkter
+        </Link>
+      </div>
+    );
+  }
+
   return (
     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {products.map((product) => (
+      {filtered.map((product) => (
         <ProductCard key={product.id} product={product} />
       ))}
     </div>

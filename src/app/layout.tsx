@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
+import { Suspense } from "react";
 import "./globals.css";
 import { CartProvider } from "@/lib/cart-context";
+import { CategoryNavRail } from "@/components/CategoryNavRail";
 
 export const metadata: Metadata = {
   title: "Östafrikansk Butik – Dirac, Baatis, Macwiis & Unsi",
@@ -23,8 +25,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="sv">
-      <body className="min-h-screen">
+      <body className="min-h-screen lg:pr-56">
         <CartProvider>{children}</CartProvider>
+        <Suspense fallback={null}>
+          <CategoryNavRail />
+        </Suspense>
       </body>
     </html>
   );
