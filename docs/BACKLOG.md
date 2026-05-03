@@ -37,7 +37,7 @@ Grovmalad backlogg för Epic B (ersätts eller bryts ned i mindre poster när du
 | ID | Prioritet | Typ | Beskrivning | Tester först | Status |
 |----|-----------|-----|-------------|--------------|--------|
 | EA-001 | P1 | Backend | Lägg till Prisma-modeller för `Order` och `OrderItem` | Unit + API | done |
-| EA-002 | P1 | API | Skapa `POST /api/orders` via service/repository-lager | API + Unit | todo |
+| EA-002 | P1 | API | Skapa `POST /api/orders` via service/repository-lager | API + Unit | done |
 | EA-003 | P1 | Frontend | Koppla `/kassa` till order-API (ersätt demo-submit) | Unit + E2E | todo |
 | EA-004 | P1 | E2E | BDD-scenario: lyckad beställning från varukorg till tacksida | Playwright | todo |
 
