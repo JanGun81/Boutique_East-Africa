@@ -1,5 +1,5 @@
 /**
- * Startsida – mobilförst, varm östafrikansk design.
+ * Startsida – mobilförst, varm design för Nordic Muslim.
  * Tydlig header, hero, två vägar: wizard ("Börja här") och "Se alla produkter".
  */
 
@@ -18,9 +18,9 @@ export default function HomePage() {
             Välkommen
           </h2>
           <p className="text-gray-700 max-w-xl text-base md:text-lg leading-relaxed">
-            Kläder och produkter med östafrikanskt tema – från somaliska, etiopiska
-            och eritreanska traditioner. Här hittar du dirac, baatis, macwiis, unsi
-            (rökelse) och mer. Enkelt att beställa – steg för steg eller bläddra fritt.
+            Nordic Muslim samlar muslimska kläder för vardag och fest – baati, dirac,
+            macwiis, khamis, klänningar och mer. Enkelt att beställa, steg för steg
+            eller genom att bläddra fritt i sortimentet.
           </p>
         </div>
       </section>
@@ -82,10 +82,11 @@ export default function HomePage() {
           </h3>
           <div className="flex flex-wrap gap-2">
             {[
+              { name: "Baati", slug: "baatis" },
               { name: "Dirac", slug: "dirac" },
-              { name: "Baatis", slug: "baatis" },
               { name: "Macwiis", slug: "macwiis" },
-              { name: "Unsi", slug: "unsi" },
+              { name: "Khamis", slug: "khamis" },
+              { name: "Klänningar", slug: "klanningar" },
             ].map(({ name, slug }) => (
               <Link
                 key={slug}
@@ -103,7 +104,7 @@ export default function HomePage() {
       <footer className="border-t border-warm-200 bg-warm-100 mt-auto">
         <div className="container mx-auto px-4 py-6">
           <p className="text-center text-sm text-gray-600">
-            Östafrikansk Butik – varma toner, enkel beställning · Mobilförst · PWA
+            Nordic Muslim – enkel beställning · Mobilförst · PWA
           </p>
         </div>
       </footer>

@@ -5,9 +5,9 @@ import { CartProvider } from "@/lib/cart-context";
 import { CategoryNavRail } from "@/components/CategoryNavRail";
 
 export const metadata: Metadata = {
-  title: "Östafrikansk Butik – Dirac, Baatis, Macwiis & Unsi",
+  title: "Nordic Muslim",
   description:
-    "Kläder och produkter med östafrikanskt tema – somaliska, etiopiska och eritreanska traditioner.",
+    "Nordic Muslim – muslimska kläder för alla tillfällen. Baati, Dirac, Macwiis, Khamis, klänningar och sjalar.",
   manifest: "/manifest.json",
 };
 
@@ -25,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="sv">
-      <body className="min-h-screen lg:pr-56">
+      <body className="min-h-screen lg:pl-56">
         <CartProvider>{children}</CartProvider>
         <Suspense fallback={null}>
           <CategoryNavRail />

@@ -2,7 +2,7 @@
 
 /**
  * Gemensam sidhuvud: hamburger + utfällbar meny på mindre skärmar (<lg).
- * Från lg och uppåt ligger kategorier i högerpanelen (`CategoryNavRail` i layout).
+ * Från lg och uppåt ligger kategorier i vänsterpanelen (`CategoryNavRail` i layout).
  */
 
 import Link from "next/link";
@@ -91,10 +91,10 @@ export function SiteHeader({ variant, pageTitle, back }: SiteHeaderProps) {
             {variant === "home" ? (
               <Link href="/" className="block min-w-0">
                 <h1 className="text-xl font-bold md:text-2xl tracking-tight truncate">
-                  Östafrikansk Butik
+                  Nordic Muslim
                 </h1>
-                <p className="text-xs md:text-sm text-white/80 mt-0.5 truncate">
-                  Dirac · Baatis · Macwiis · Unsi &amp; mer
+                <p className="text-xs md:text-sm text-white/80 mt-1 leading-snug">
+                  Baati · Dirac · Macwiis · Khamis · klänningar &amp; mer
                 </p>
               </Link>
             ) : (

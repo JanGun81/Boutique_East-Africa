@@ -1,6 +1,6 @@
-# Östafrikansk Butik
+# Nordic Muslim (webbutik)
 
-Webbutik med östafrikanskt tema – dirac, baatis, macwiis, unsi m.m. Byggd med Next.js (App Router), TypeScript, Prisma och Tailwind. Mobilförst, PWA-klar.
+Webbutik under varumärket **Nordic Muslim** – muslimska kläder för alla tillfällen (baati, dirac, macwiis, khamis, klänningar m.m.). Byggd med Next.js (App Router), TypeScript, Prisma och Tailwind. Mobilförst, PWA-klar.
 
 ## Krav
 
