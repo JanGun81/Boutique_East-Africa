@@ -25,6 +25,12 @@ Kort logg över relevanta produkt-/varumärkes- och UI-ändringar (ej full git-h
 
 - **`tests/e2e/home.spec.ts`:** Förväntad rubrik (`/^nordic muslim$/i`), sortimentsrad, hero-text och sidopanelstext uppdaterade.
 
+### Statisk showroom (GitHub Pages)
+
+- **`showroom/`:** Ren `index.html` + `styles.css`, inget JS, inga API-anrop. Exempelbilder via Unsplash (byt till egna filer/URL:er).
+- **`.github/workflows/showroom-pages.yml`:** Publicerar enbart `showroom/` till GitHub Pages när `showroom/` eller workflowen ändras på `main`.
+- **`showroom/README.md`:** Steg för att aktivera Pages (GitHub Actions) och lokal förhandsvisning.
+
 ## 2026-05-03 (referens)
 
 Tidigare Nordic Muslim-rebrand med tagline "Kläder för alla tillfällen" och kategorierna Abaya/Dirac/Baati/sjalar/Khamis/macwiis. Den varianten revertades innan merge; aktuell text och kategorilista är den ovan (2026-05-11).
