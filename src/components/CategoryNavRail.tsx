@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * Höger sidopanel (endast lg+): kategorilänkar i samma visuella språk som övriga sidan.
+ * Vänster sidopanel (endast lg+): kategorilänkar i samma visuella språk som övriga sidan.
  * Mobil använder SiteHeader-hamburgaren.
  */
 
@@ -42,7 +42,7 @@ export function CategoryNavRail() {
 
   return (
     <aside
-      className="hidden lg:flex flex-col fixed right-0 top-0 z-20 h-svh w-56 border-l border-warm-200/90 bg-gradient-to-b from-warm-50 via-warm-50 to-warm-100 shadow-[-4px_0_24px_-8px_rgba(0,0,0,0.08)]"
+      className="hidden lg:flex flex-col fixed left-0 top-0 z-20 h-svh w-56 border-r border-warm-200/90 bg-gradient-to-b from-warm-50 via-warm-50 to-warm-100 shadow-[4px_0_24px_-8px_rgba(0,0,0,0.08)]"
       aria-label="Butiksmenyn"
     >
       <div className="shrink-0 px-4 pt-5 pb-3 border-b border-warm-200/70">

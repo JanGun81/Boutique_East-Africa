@@ -35,3 +35,20 @@ export interface CategoriesResponse {
 export interface ProductResponse {
   product: ProductDto | null;
 }
+
+/** POST /api/orders – lyckad skapad order (DTO med ISO-datum). */
+export interface CreatedOrderDto {
+  id: string;
+  totalCents: number;
+  status: string;
+  createdAt: string;
+}
+
+export interface CreateOrderResponse {
+  order: CreatedOrderDto;
+}
+
+/** POST /api/orders – validerings- eller affärsfel. */
+export interface CreateOrderErrorBody {
+  errors: string[];
+}

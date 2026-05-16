@@ -37,9 +37,10 @@ Grovmalad backlogg för Epic B (ersätts eller bryts ned i mindre poster när du
 | ID | Prioritet | Typ | Beskrivning | Tester först | Status |
 |----|-----------|-----|-------------|--------------|--------|
 | EA-001 | P1 | Backend | Lägg till Prisma-modeller för `Order` och `OrderItem` | Unit + API | done |
-| EA-002 | P1 | API | Skapa `POST /api/orders` via service/repository-lager | API + Unit | todo |
+| EA-002 | P1 | API | Skapa `POST /api/orders` via service/repository-lager | API + Unit | done |
 | EA-003 | P1 | Frontend | Koppla `/kassa` till order-API (ersätt demo-submit) | Unit + E2E | todo |
 | EA-004 | P1 | E2E | BDD-scenario: lyckad beställning från varukorg till tacksida | Playwright | todo |
+| EA-017 | P2 | Branding | **Nordic Muslim:** rubrik "Nordic Muslim", sortimentsrad "Baati · Dirac · Macwiis · Khamis · klänningar & mer" i header/metadata/manifest/PWA. Startsida (hero, footer, populära kategorier) och `demo-categories` justerade. README + `docs/CHANGELOG.md`. Kategorirail **vänster** (`lg:pl-56`). E2E `home.spec` följer ny copy. *Nästa steg:* seed/DB-kategorier i linje med nya chips. | E2E + manuell | done |
 
 ## Nästa iteration
 
@@ -55,7 +56,7 @@ Fokus efter P1-orderflödet: produktvyer **och** beställningswizarden på `/bes
 | ID | Prioritet | Typ | Beskrivning | Tester först | Status |
 |----|-----------|-----|-------------|--------------|--------|
 | EA-005 | P2 | Frontend | Produktdetaljsida `produkter/[slug]` | Unit + E2E | todo |
-| EA-016 | P2 | Frontend | **Kategorimeny / navigation (klar):** `GET /api/categories`, `CategoryService` + repository. **Mindre än lg:** hamburger i `SiteHeader` med kategorilänkar. **lg och uppåt:** höger **sidopanel** (`CategoryNavRail`, varma toner) – `layout.tsx` reserverar `lg:pr-56`. Startsidans "Populära kategorier" länkar till `/produkter?kategori=`. | E2E + Unit | done |
+| EA-016 | P2 | Frontend | **Kategorimeny / navigation (klar):** `GET /api/categories`, `CategoryService` + repository. **Mindre än lg:** hamburger i `SiteHeader` med kategorilänkar. **lg och uppåt:** **vänster** sidopanel (`CategoryNavRail`, varma toner) – `layout.tsx` reserverar `lg:pl-56` (uppdaterat i EA-017). Startsidans "Populära kategorier" länkar till `/produkter?kategori=`. | E2E + Unit | done |
 | EA-006 | P2 | API | `GET /api/products/[slug]` med DTO-kontrakt | API + Unit | todo |
 | EA-007 | P2 | Frontend | **Kategorifilter (klar i grunden):** `ProductGrid` filtrerar på `?kategori=<slug>`; meny driver valet. Ev. komplettering: filterchips/rad på själva produktsidan senare. | E2E + Unit | done |
 | EA-008 | P2 | UX | Wizard **steg 1**: arrangemang (t.ex. Vardag, Festligt, Natt, Bön). Aktiv endast om kopplat utbud finns; annars utgråat + sekundärtext ("Kommer snart"). Produkt↔arrangemang i datamodell föreslås vid implementation. | E2E + Unit | todo |

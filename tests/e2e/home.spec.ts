@@ -9,10 +9,10 @@ test.describe("Startsida", () => {
   test("visar butikens namn och välkomsttext", async ({ page }) => {
     await page.goto("/");
 
-    await expect(page.getByRole("heading", { name: /östafrikansk butik/i })).toBeVisible();
-    await expect(page.getByText(/dirac · baatis · macwiis/i)).toBeVisible();
+    await expect(page.getByRole("heading", { name: /^nordic muslim$/i })).toBeVisible();
+    await expect(page.getByText(/baati · dirac · macwiis · khamis/i)).toBeVisible();
     await expect(page.getByText(/välkommen/i)).toBeVisible();
-    await expect(page.getByText(/kläder och produkter/i)).toBeVisible();
+    await expect(page.getByText(/nordic muslim samlar/i)).toBeVisible();
   });
 
   test("har länk till steg-för-steg beställning och till alla produkter", async ({ page }) => {
@@ -45,7 +45,7 @@ test.describe("Startsida", () => {
     expect(Array.isArray(data.categories)).toBe(true);
   });
 
-  test("på stor skärm visas kategorilänkar i höger sidopanel", async ({ page }) => {
+  test("på stor skärm visas kategorilänkar i vänster sidopanel", async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 720 });
     await page.goto("/");
 
