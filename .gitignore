@@ -31,6 +31,9 @@ yarn-error.log*
 .DS_Store
 Thumbs.db
 
+# Nested clone (ska inte committas som submodule)
+Boutique_East-Africa/
+
 # Testing
 playwright-report
 test-results
