@@ -6,6 +6,7 @@
     <meta name="description" content="Nordic Muslim – showroom med abayas." />
     <title>Nordic Muslim – Showroom</title>
     <link rel="stylesheet" href="./styles.css" />
+    <script src="./showroom.js" defer></script>
   </head>
   <body>
     <header class="hero">
@@ -30,9 +31,9 @@
     <main class="wrap">
       <section class="block" aria-labelledby="h-abaya">
         <h2 id="h-abaya">Abayor</h2>
-        <p class="intro">En produkt per modell – färgen på bilden är ett exempel ur sortimentet.</p>
+        <p class="intro">Klicka på en produkt för att bläddra bland färgvarianter.</p>
         <div class="grid">
-          <figure class="card">
+          <figure class="card card--clickable" data-product-id="typ1-malaysian" tabindex="0" role="button">
             <div class="card-figure">
               <img
                 src="./images/abaya_brun.jpg"
@@ -44,6 +45,7 @@
             </div>
             <figcaption class="card-body">
               <p class="card-title">Typ 1: Abaya malaysian</p>
+              <p class="card-hint"></p>
               <dl class="plagg-meta">
                 <div class="plagg-meta__row">
                   <dt>Beskrivning</dt>
@@ -65,7 +67,7 @@
             </figcaption>
           </figure>
 
-          <figure class="card">
+          <figure class="card card--clickable" data-product-id="typ2-lovdekor" tabindex="0" role="button">
             <div class="card-figure">
               <img
                 src="./images/abaya_beige_dekor.jpg"
@@ -77,6 +79,7 @@
             </div>
             <figcaption class="card-body">
               <p class="card-title">Typ 2: Abaya lövdekor</p>
+              <p class="card-hint" aria-hidden="true"></p>
               <dl class="plagg-meta">
                 <div class="plagg-meta__row">
                   <dt>Beskrivning</dt>
@@ -98,7 +101,7 @@
             </figcaption>
           </figure>
 
-          <figure class="card">
+          <figure class="card card--clickable" data-product-id="typ3-blomsterdekor" tabindex="0" role="button">
             <div class="card-figure">
               <img
                 src="./images/abaya_green_blomst_dekor.jpg"
@@ -110,6 +113,7 @@
             </div>
             <figcaption class="card-body">
               <p class="card-title">Typ 3: Abaya blomsterdekor</p>
+              <p class="card-hint" aria-hidden="true"></p>
               <dl class="plagg-meta">
                 <div class="plagg-meta__row">
                   <dt>Beskrivning</dt>
@@ -131,7 +135,7 @@
             </figcaption>
           </figure>
 
-          <figure class="card">
+          <figure class="card card--clickable" data-product-id="typ4-gulddekor" tabindex="0" role="button">
             <div class="card-figure">
               <img
                 src="./images/abaya_dark_blue_gold_dekor.jpg"
@@ -143,6 +147,7 @@
             </div>
             <figcaption class="card-body">
               <p class="card-title">Typ 4: Abaya gulddekor</p>
+              <p class="card-hint" aria-hidden="true"></p>
               <dl class="plagg-meta">
                 <div class="plagg-meta__row">
                   <dt>Beskrivning</dt>
@@ -164,7 +169,7 @@
             </figcaption>
           </figure>
 
-          <figure class="card">
+          <figure class="card card--clickable" data-product-id="typ5-monster-bla" tabindex="0" role="button">
             <div class="card-figure">
               <img
                 src="./images/abaya_white_blueish_pattern_dekor.jpg"
@@ -175,7 +180,8 @@
               />
             </div>
             <figcaption class="card-body">
-              <p class="card-title">Typ 5: Abaya mönsterdekor (blåaktig)</p>
+              <p class="card-title">Typ 5: Abaya mönsterdekor</p>
+              <p class="card-hint" aria-hidden="true"></p>
               <dl class="plagg-meta">
                 <div class="plagg-meta__row">
                   <dt>Beskrivning</dt>
@@ -191,44 +197,12 @@
                 </div>
                 <div class="plagg-meta__row">
                   <dt>Färg</dt>
-                  <dd>Vit, blåaktigt mönster</dd>
+                  <dd>Vit, blåaktigt och grönt mönster</dd>
                 </div>
               </dl>
             </figcaption>
           </figure>
-          <figure class="card">
-            <div class="card-figure">
-              <img
-                src="./images/abaya_white_green_pattern_dekor.jpg"
-                alt="Abaya med grönt mönsterdekor"
-                width="800"
-                height="1067"
-                loading="lazy"
-              />
-            </div>
-            <figcaption class="card-body">
-              <p class="card-title">Typ 6: Abaya mönsterdekor (grön)</p>
-              <dl class="plagg-meta">
-                <div class="plagg-meta__row">
-                  <dt>Beskrivning</dt>
-                  <dd>Abaya med grönt mönster</dd>
-                </div>
-                <div class="plagg-meta__row">
-                  <dt>Storlek</dt>
-                  <dd>54-58 (preliminärt)</dd>
-                </div>
-                <div class="plagg-meta__row">
-                  <dt>Pris</dt>
-                  <dd>600 kr (preliminärt)</dd>
-                </div>
-                <div class="plagg-meta__row">
-                  <dt>Färg</dt>
-                  <dd>Vit, grönt mönster</dd>
-                </div>
-              </dl>
-            </figcaption>
-          </figure>
-          <figure class="card">
+          <figure class="card card--clickable" data-product-id="typ6-tonad" tabindex="0" role="button">
             <div class="card-figure">
               <img
                 src="./images/abaya_pink_dekor.jpg"
@@ -239,7 +213,8 @@
               />
             </div>
             <figcaption class="card-body">
-              <p class="card-title">Typ 7: Abaya tonad</p>
+              <p class="card-title">Typ 6: Abaya tonad</p>
+              <p class="card-hint" aria-hidden="true"></p>
               <dl class="plagg-meta">
                 <div class="plagg-meta__row">
                   <dt>Beskrivning</dt>
@@ -260,7 +235,7 @@
               </dl>
             </figcaption>
           </figure>
-          <figure class="card">
+          <figure class="card card--clickable" data-product-id="typ7-digital" tabindex="0" role="button">
             <div class="card-figure">
               <img
                 src="./images/abaya_yellow_blomst_dekor.jpg"
@@ -271,7 +246,8 @@
               />
             </div>
             <figcaption class="card-body">
-              <p class="card-title">Typ 8: Abaya "digital"</p>
+              <p class="card-title">Typ 7: Abaya "digital"</p>
+              <p class="card-hint" aria-hidden="true"></p>
               <dl class="plagg-meta">
                 <div class="plagg-meta__row">
                   <dt>Beskrivning</dt>
@@ -292,7 +268,7 @@
               </dl>
             </figcaption>
           </figure>
-          <figure class="card">
+          <figure class="card card--clickable" data-product-id="typ8-extra-bred" tabindex="0" role="button">
             <div class="card-figure">
               <img
                 src="./images/abaya_dark_blue_3.jpg"
@@ -303,7 +279,8 @@
               />
             </div>
             <figcaption class="card-body">
-              <p class="card-title">Typ 9: Abaya extra bred</p>
+              <p class="card-title">Typ 8: Abaya extra bred</p>
+              <p class="card-hint" aria-hidden="true"></p>
               <dl class="plagg-meta">
                 <div class="plagg-meta__row">
                   <dt>Beskrivning</dt>
@@ -327,6 +304,73 @@
         </div>
       </section>
     </main>
+
+    <div
+      id="variant-modal"
+      class="variant-modal"
+      hidden
+      aria-hidden="true"
+    >
+      <div class="variant-modal__backdrop" data-close tabindex="-1" aria-hidden="true"></div>
+      <div
+        class="variant-modal__dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="variant-modal-title"
+      >
+        <button type="button" class="variant-modal__close" aria-label="Stäng">
+          <span aria-hidden="true">×</span>
+        </button>
+        <div class="variant-modal__layout">
+          <button
+            type="button"
+            class="variant-modal__stage"
+            id="variant-modal-stage"
+            aria-label="Öppna förstoring av vald färg"
+          >
+            <img id="variant-modal-img" src="" alt="" width="800" height="1067" />
+            <span class="variant-modal__stage-hint">Tryck på bilden för förstoring</span>
+          </button>
+          <div class="variant-modal__aside">
+            <h2 id="variant-modal-title" class="variant-modal__title"></h2>
+            <p class="variant-modal__swatch-label">Färgvarianter · klicka för att byta färg</p>
+            <div id="variant-swatches" class="variant-modal__swatches"></div>
+            <dl class="plagg-meta variant-modal__meta">
+              <div class="plagg-meta__row">
+                <dt>Beskrivning</dt>
+                <dd id="variant-modal-desc"></dd>
+              </div>
+              <div class="plagg-meta__row">
+                <dt>Storlek</dt>
+                <dd id="variant-modal-size"></dd>
+              </div>
+              <div class="plagg-meta__row">
+                <dt>Pris</dt>
+                <dd id="variant-modal-price"></dd>
+              </div>
+              <div class="plagg-meta__row">
+                <dt>Vald färg</dt>
+                <dd id="variant-modal-color"></dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="zoom-viewer" class="zoom-viewer" hidden aria-hidden="true">
+      <div class="zoom-viewer__backdrop" data-zoom-close tabindex="-1" aria-hidden="true"></div>
+      <div class="zoom-viewer__panel" role="dialog" aria-modal="true" aria-labelledby="zoom-viewer-title">
+        <p id="zoom-viewer-title" class="zoom-viewer__title"></p>
+        <button type="button" class="zoom-viewer__close" aria-label="Stäng förstoring">
+          <span aria-hidden="true">×</span>
+        </button>
+        <div class="zoom-viewer__viewport" id="zoom-viewport">
+          <img id="zoom-viewer-img" src="" alt="" draggable="false" />
+        </div>
+        <p class="zoom-viewer__hint">Dra för att flytta bilden · stäng med × eller utanför rutan</p>
+      </div>
+    </div>
 
     <footer class="foot">
       <p class="foot-brand">Nordic Muslim · Showroom</p>
