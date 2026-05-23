@@ -134,6 +134,8 @@ Mer detaljer om bilder: **`showroom/images/README.md`**. Kort översikt av showr
 | Bilder syns lokalt men inte online | Använd `./images/...`, inte absoluta sökvägar. Committa och pusha bildfilerna. |
 | 404 på CSS/bilder | Filnamn skiftlägeskänsliga på Pages – matcha exakt som i `index.html`. |
 | Gammal version syns | Vänta 1–2 min efter grön workflow; prova hård omladdning (Ctrl+F5). |
+| Osnygg sida, jättebild / zoom i vägen | Ofta fel deploy (rot-HTML eller CSS som inte laddas). Källa ska vara **GitHub Actions**; öppna rot-URL, inte `/showroom/`. |
+| Först trasig sida, sedan 404 | Vanligt vid byte till Actions om deploy misslyckades – kör workflow manuellt under **Actions** efter push till `main`. |
 
 **Obs:** GitHub **Codespaces** är för utveckling i molnet – inte hosting. För publik showroom är **GitHub Pages** rätt val.
 

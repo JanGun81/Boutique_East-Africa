@@ -295,7 +295,7 @@ body.zoom-open {
 }
 
 .variant-modal[hidden] {
-  display: none;
+  display: none !important;
 }
 
 .variant-modal__backdrop {
@@ -513,7 +513,7 @@ body.zoom-open {
 }
 
 .zoom-viewer[hidden] {
-  display: none;
+  display: none !important;
 }
 
 .zoom-viewer__backdrop {

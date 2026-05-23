@@ -4,11 +4,10 @@
 name: Deploy showroom to GitHub Pages
 
 on:
+  # Alla push till main – annars körs inte deploy om mergen bara rör andra mappar
+  # och Pages kan då visa gammal/ingen sajt efter byte till GitHub Actions.
   push:
     branches: ["main"]
-    paths:
-      - "showroom/**"
-      - ".github/workflows/showroom-pages.yml"
   workflow_dispatch:
 
 permissions:
@@ -29,6 +28,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Verify showroom artifact
+        run: |
+          test -f showroom/index.html
+          test -f showroom/styles.css
+          test -f showroom/showroom.js
+          test -f showroom/.nojekyll
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
